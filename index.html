@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onur — Kişisel Web Sayfası</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Sıfırlama & Temel ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0a1628;
+      --navy-mid:   #0f2044;
+      --navy-light: #1a3060;
+      --gold:       #c9a84c;
+      --gold-light: #e8c96a;
+      --gold-pale:  #f5e9c8;
+      --white:      #ffffff;
+      --gray-100:   #f0f4f8;
+      --gray-400:   #8a9bb5;
+      --transition: 0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.7;
+    }
+
+    /* ─── Navigasyon ────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 6%;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      transition: box-shadow var(--transition);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--white); }
+
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── Hero ──────────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 6% 4rem;
+    }
+
+    /* Arka plan degrade & desen */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,48,96,0.9) 0%, transparent 70%),
+        linear-gradient(160deg, var(--navy) 0%, #0c1e45 60%, #07111f 100%);
+    }
+
+    /* Dekoratif altın halkalar */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 680px; height: 680px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 0 0 80px  rgba(201,168,76,0.04),
+        0 0 0 160px rgba(201,168,76,0.025),
+        0 0 0 240px rgba(201,168,76,0.012);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      color: var(--gray-400);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-subtitle strong { color: var(--white); font-weight: 500; }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,168,76,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.5);
+    }
+
+    .btn-outline:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* Aşağı kaydırma oku */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .scroll-hint .arrow {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
+
+    /* ─── Ortak Bölüm Stilleri ─────────────────────────────────────────── */
+    section { padding: 7rem 6%; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      width: 56px; height: 3px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ─── Hakkımda ──────────────────────────────────────────────────────── */
+    #hakkimda {
+      background: var(--navy-mid);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Avatar placeholder – fotoğraf eklenirse img ile değiştir */
+    .avatar {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+      border: 2px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--gold);
+      position: relative;
+    }
+
+    .avatar::before {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat { text-align: center; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      letter-spacing: 0.06em;
+      margin-top: 0.3rem;
+    }
+
+    .about-text p {
+      color: var(--gray-400);
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text p strong { color: var(--white); font-weight: 500; }
+
+    /* ─── Beceriler ─────────────────────────────────────────────────────── */
+    #beceriler {
+      background: var(--navy);
+    }
+
+    .skills-header { max-width: 1100px; margin: 0 auto 3.5rem; }
+
+    .skills-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      border-color: rgba(201,168,76,0.35);
+    }
+
+    .skill-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .skill-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: var(--white);
+    }
+
+    .skill-card p {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+      margin-bottom: 1.4rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+
+    /* Yetenek barları */
+    .skill-bars { margin-top: 0.5rem; }
+
+    .skill-bar-item { margin-bottom: 1rem; }
+
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-bar-track {
+      height: 4px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+    }
+
+    /* ─── İletişim ──────────────────────────────────────────────────────── */
+    #iletisim {
+      background: var(--navy-mid);
+    }
+
+    .contact-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      color: var(--gray-400);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .contact-icon {
+      width: 44px; height: 44px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .contact-item-text { font-size: 0.88rem; }
+    .contact-item-text span { display: block; color: var(--gray-400); font-size: 0.75rem; margin-bottom: 0.15rem; }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+    }
+
+    .social-link {
+      width: 42px; height: 42px;
+      border-radius: 8px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--gray-400);
+      transition: all var(--transition);
+    }
+
+    .social-link:hover {
+      color: var(--gold);
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Form */
+    .contact-form {
+      background: var(--navy);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 10px;
+      padding: 2.5rem;
+    }
+
+    .form-group { margin-bottom: 1.4rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(138,155,181,0.5); }
+
+    /* ─── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 2rem 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+
+    /* ─── Duyarlı Tasarım ───────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid        { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual      { order: -1; }
+      .contact-wrapper   { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 5%; }
+      .nav-links { gap: 1.2rem; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .about-stats { gap: 1.2rem; }
+      .contact-form { padding: 1.5rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Navigasyon ─────────────────────────────────────────────────────── -->
+  <nav>
+    <a href="#" class="nav-logo">O<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#hakkimda">Hakkımda</a></li>
+      <li><a href="#beceriler">Beceriler</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Hoş Geldiniz</div>
+      <h1>
+        Merhaba, Ben<br>
+        <span class="highlight">Onur Derici</span>
+      </h1>
+      <p class="hero-subtitle">
+        <strong>Yazılım Geliştirici</strong> &amp; Dijital Çözüm Üreticisi<br>
+        Fikrinizi hayata geçiriyor, kodla değer yaratıyorum.
+      </p>
+      <div class="hero-cta">
+        <a href="#iletisim" class="btn btn-primary">İletişime Geç</a>
+        <a href="#hakkimda" class="btn btn-outline">Daha Fazla</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="arrow"></div>
+      Kaydır
+    </div>
+  </section>
+
+  <!-- ─── Hakkımda ──────────────────────────────────────────────────────── -->
+  <section id="hakkimda">
+    <div class="about-grid">
+
+      <div class="about-visual">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="avatar">O</div>
+          <div class="about-stats">
+            <div class="stat">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">Yıl Deneyim</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">40+</div>
+              <div class="stat-label">Proje</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">98%</div>
+              <div class="stat-label">Müşteri Memnuniyeti</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-label">Hakkımda</div>
+        <h2 class="section-title">Kaliteli Kod,<br>Gerçek Sonuçlar</h2>
+        <div class="divider"></div>
+        <p>
+          Yazılım dünyasında <strong>5 yılı aşkın deneyimle</strong> web uygulamaları, mobil çözümler ve kurumsal yazılımlar geliştiriyorum.
+          Her projede teknik mükemmeliyeti kullanıcı deneyimiyle buluşturmayı öncelik olarak görüyorum.
+        </p>
+        <p>
+          <strong>Temiz kod</strong> ve <strong>ölçeklenebilir mimari</strong> anlayışıyla hareket ediyor; müşterilerimin hedeflerini
+          gerçek, sürdürülebilir dijital ürünlere dönüştürüyorum.
+        </p>
+        <p>
+          İstanbul merkezli çalışmakla birlikte dünya genelindeki müşteri ve ekiplerle uzaktan iş birlikleri yürütüyorum.
+        </p>
+        <a href="#iletisim" class="btn btn-primary" style="margin-top:0.5rem;">Birlikte Çalışalım</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Beceriler ─────────────────────────────────────────────────────── -->
+  <section id="beceriler">
+    <div class="skills-header">
+      <div class="section-label">Beceriler</div>
+      <h2 class="section-title">Uzmanlık Alanlarım</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="skills-grid">
+
+      <!-- Kart 1 -->
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <h3>Frontend Geliştirme</h3>
+        <p>Modern ve hızlı kullanıcı arayüzleri tasarlayıp geliştiriyorum; performans ve erişilebilirlik ön planda.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>React / Next.js</span><span>90%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>TypeScript</span><span>85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>CSS / Tailwind</span><span>92%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div>
+          </div>
+        </div>
+        <div class="skill-tags" style="margin-top:1.2rem;">
+          <span class="tag">React</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Tailwind</span>
+        </div>
+      </div>
+
+      <!-- Kart 2 -->
+      <div class="skill-card">
+        <div class="skill-icon">🛠️</div>
+        <h3>Backend & API</h3>
+        <p>Ölçeklenebilir, güvenli ve yüksek performanslı sunucu tarafı mimarileri ve RESTful / GraphQL API'lar inşa ediyorum.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Node.js / Express</span><span>88%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Python / FastAPI</span><span>80%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>PostgreSQL / MongoDB</span><span>83%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+        <div class="skill-tags" style="margin-top:1.2rem;">
+          <span class="tag">Node.js</span>
+          <span class="tag">Python</span>
+          <span class="tag">REST</span>
+          <span class="tag">GraphQL</span>
+        </div>
+      </div>
+
+      <!-- Kart 3 -->
+      <div class="skill-card">
+        <div class="skill-icon">☁️</div>
+        <h3>Bulut & DevOps</h3>
+        <p>CI/CD boru hatları kuruyor, container tabanlı dağıtım gerçekleştiriyor ve bulut altyapısını yönetiyorum.</p>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>Docker / Kubernetes</span><span>78%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>AWS / Vercel</span><span>82%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header"><span>GitHub Actions</span><span>87%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:87%"></div></div>
+          </div>
+        </div>
+        <div class="skill-tags" style="margin-top:1.2rem;">
+          <span class="tag">Docker</span>
+          <span class="tag">AWS</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Linux</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── İletişim ──────────────────────────────────────────────────────── -->
+  <section id="iletisim">
+    <div class="contact-wrapper">
+
+      <div class="contact-info">
+        <div class="section-label">İletişim</div>
+        <h2 class="section-title">Konuşalım</h2>
+        <div class="divider"></div>
+        <p>Yeni bir proje, iş birliği ya da sadece merhaba demek için — her zaman buradayım.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-item-text">
+            <span>E-posta</span>
+            onur1907derici1@gmail.com
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-item-text">
+            <span>Telefon</span>
+            +90 535 353 53 53
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text">
+            <span>Konum</span>
+            İstanbul, Türkiye
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="#" class="social-link" title="GitHub">gh</a>
+          <a href="#" class="social-link" title="Twitter/X">𝕏</a>
+          <a href="#" class="social-link" title="Dribbble">dr</a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Adınız</label>
+          <input type="text" placeholder="Adınızı girin" />
+        </div>
+        <div class="form-group">
+          <label>E-posta</label>
+          <input type="email" placeholder="mail@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Konu</label>
+          <input type="text" placeholder="Nasıl yardımcı olabilirim?" />
+        </div>
+        <div class="form-group">
+          <label>Mesaj</label>
+          <textarea placeholder="Projeniz hakkında bilgi verin…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; font-size:0.9rem;">
+          Mesaj Gönder
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Footer ────────────────────────────────────────────────────────── -->
+  <footer>
+    <a href="#" class="footer-logo">Onur Derici</a>
+    <p>© 2026 Onur Derici. Tüm hakları saklıdır.</p>
+    <p style="font-size:0.75rem;">Tasarım &amp; Geliştirme: Onur Derici</p>
+  </footer>
+
+</body>
+</html>
